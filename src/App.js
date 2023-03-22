@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { Input } from './Input';
+import { RemoveForm } from './RemoveForm';
 
 function App() {
-  const [colors, setColors] = useState([]);
+  const [colors, setColors] = useState(['red', 'green', 'blue']);
   
-  const addColorAtIndex = (newColor, index) => {
-    // Todo: Add 'newColor' to the --end-- of 'colors'
-    // and update state
-    const updatedColors = [
-      ...colors.slice(0, index),
-      newColor,
-      ...colors.slice(index)
-    ];
+  const removeColorAtIndex = (indexToRemove) => {
+    // TODO: Remove the element at 'indexToRemove'
+    // Don't forget to update state by calling 'setColors'
+    const updatedColors = colors.filter((_, index) => {
+      return indexToRemove !== index;
+    });
 
     setColors(updatedColors);
+  };
+  
+  const addColor = (newColor) => {
+    setColors([...colors, newColor])
   };
   
   const renderedColors = colors.map((color, i) => {
@@ -22,10 +25,12 @@ function App() {
   
   return (
     <div>
-      <Input onSubmit={addColorAtIndex} />
+      <Input onSubmit={addColor} />
       <ul>
         {renderedColors}
       </ul>
+      <hr />
+      <RemoveForm onSubmit={removeColorAtIndex} max={colors.length}  />
     </div>
   );
 }
