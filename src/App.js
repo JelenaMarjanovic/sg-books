@@ -4,12 +4,13 @@ import { Input } from './Input';
 function App() {
   const [colors, setColors] = useState([]);
   
-  const addColor = (newColor) => {
+  const addColorAtIndex = (newColor, index) => {
     // Todo: Add 'newColor' to the --end-- of 'colors'
     // and update state
     const updatedColors = [
-      ...colors,
-      newColor
+      ...colors.slice(0, index),
+      newColor,
+      ...colors.slice(index)
     ];
 
     setColors(updatedColors);
@@ -21,7 +22,7 @@ function App() {
   
   return (
     <div>
-      <Input onSubmit={addColor} />
+      <Input onSubmit={addColorAtIndex} />
       <ul>
         {renderedColors}
       </ul>
