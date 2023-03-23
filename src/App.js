@@ -1,36 +1,47 @@
 import { useState } from 'react';
 import { Input } from './Input';
-import { RemoveForm } from './RemoveForm';
+import { EditForm } from './EditForm';
 
 function App() {
-  const [colors, setColors] = useState(['red', 'green', 'blue']);
+  const [books, setBooks] = useState([
+    { id: 10, title: 'Harry Potter' }, // Don't change
+    { id: 17, title: 'Hunger Games' },
+    { id: 54, title: 'Dark Tower' }
+  ]);
   
-  const removeColorAtIndex = (indexToRemove) => {
-    // TODO: Remove the element at 'indexToRemove'
-    // Don't forget to update state by calling 'setColors'
-    const updatedColors = colors.filter((_, index) => {
-      return indexToRemove !== index;
+  const updateBookById = (id, title) => {
+    // TODO: Find a book in the 'books' array with the given id
+    // Update that books 'title' property
+    // Don't forget to update the 'books' state by calling 'setBooks'
+    const updatedBooks = books.map((book) => {
+      if (book.id === id) {
+        return { ...book, title};
+      }
+
+      return book;
     });
 
-    setColors(updatedColors);
+    setBooks(updatedBooks);
   };
   
-  const addColor = (newColor) => {
-    setColors([...colors, newColor])
+  const addBook = (title) => {
+    const book = { title: title, id: ~~(Math.random() * 1000) };
+
+    setBooks([...books, book])
   };
   
-  const renderedColors = colors.map((color, i) => {
-      return <li key={i}>{color}</li>
+  const renderedBooks = books.map((book, i) => {
+    return <li key={book.id}>Title: {book.title}, Id: {book.id}</li>
   });
   
   return (
     <div>
-      <Input onSubmit={addColor} />
-      <ul>
-        {renderedColors}
-      </ul>
+      <Input onSubmit={addBook} />
+      <ol>
+        {renderedBooks}
+      </ol>
       <hr />
-      <RemoveForm onSubmit={removeColorAtIndex} max={colors.length}  />
+      <EditForm books={books} onSubmit={updateBookById} />
     </div>
   );
 }

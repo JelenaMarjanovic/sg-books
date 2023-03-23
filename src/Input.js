@@ -5,14 +5,15 @@ function Input({ onSubmit }) {
   
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     onSubmit(text);
     setText('');
   };
   
   return <form onSubmit={handleSubmit}>
     <div>
-        <label>Color</label>
-        <input value={text} onChange={e => setText(e.target.value)} />
+      <label>Title</label>
+      <input value={text} onChange={e => setText(e.target.value)} />
     </div>
     <button>Submit</button>
   </form>
